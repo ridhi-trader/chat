@@ -7,7 +7,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 
 const PORT = process.env.PORT || 3000;
-const DATA_DIR = process.env.DATA_DIR || __dirname;               // Render pe persistent disk ka path yahan do
+const DATA_DIR = process.env.DATA_DIR || process.env.RAILWAY_VOLUME_MOUNT_PATH || __dirname; // Railway volume / Render disk path
 const DATA_FILE = process.env.DATA_FILE || path.join(DATA_DIR, 'data_store.json');
 const MEDIA_DIR = path.join(DATA_DIR, 'media');
 fs.mkdirSync(MEDIA_DIR, { recursive: true });
