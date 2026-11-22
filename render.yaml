@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: raazdaar
+    runtime: node
+    plan: starter
+    region: singapore
+    buildCommand: npm install --omit=dev
+    startCommand: node server.js
+    healthCheckPath: /
+    envVars:
+      - key: DATA_DIR
+        value: /data
+    disk:
+      name: raazdaar-chat
+      mountPath: /data
+      sizeGB: 1
