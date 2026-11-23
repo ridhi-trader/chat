@@ -233,7 +233,6 @@
     $('pass').value = ''; S.passcode = '';  // don't keep passcode text around
     header(); render(true); flush();
     if (S.sock) S.sock.emit('seen');
-    scheduleBreak();
   }
   $('leaveBtn').onclick = function () { leaveAll(); };
   function leaveAll() {
@@ -241,7 +240,7 @@
     endCall(true);
     S.msgs = []; S.byId = {}; S.queue = []; S.key = null; S.authHash = null; S.joined = false; S.sock = null; bound = false; $('msgs').innerHTML = '';
     $('chat').classList.remove('active'); $('login').classList.add('active');
-    $('enterBtn').disabled = false; $('enterBtn').textContent = 'Andar jao'; clearTimeout(breakT);
+    $('enterBtn').disabled = false; $('enterBtn').textContent = 'Andar jao';
   }
   document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible' && S.joined && !S.locked && S.sock) S.sock.emit('seen'); if (document.visibilityState === 'hidden') hiddenAt = Date.now(); else autoLockCheck(); });
 
@@ -340,10 +339,6 @@
       else $('lockErr').textContent = 'Galat passcode';
     });
   });
-
-  // ---------- wellbeing: gentle break reminder (nothing stored, nothing tracked) ----------
-  var breakT = null;
-  function scheduleBreak() { clearTimeout(breakT); breakT = setTimeout(function () { toast('Kaafi der ho gayi 🌿 thoda break lo, baad mein baat karna.', 6000); scheduleBreak(); }, 30 * 60 * 1000); }
 
   // ---------- calls (WebRTC, peer to peer, 1:1) ----------
   var pc = null, localStream = null, callPeer = null, pendingOffer = null, pendingIce = [];
